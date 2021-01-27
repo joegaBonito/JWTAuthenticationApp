@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
+import './Search.css';
 import { Button, Form, FormGroup, Label, Input, FormText,Container, Row, Col } from 'reactstrap';
 
-class App extends Component {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -39,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Search;

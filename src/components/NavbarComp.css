@@ -1,0 +1,77 @@
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.brand {
+    cursor: pointer;
+    color: rgba(255,255,255,1) !important;
+    font-weight: bold;
+    font-size:1.75rem !important;
+}
+
+.brand:hover {
+    color: rgba(255,255,255,1) !important;
+}
+
+.navbar {
+    position: relative !important;
+    padding: .5rem 1rem;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+    
+}
+
+.bg-nav {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.nav-link, .navbar-toggler-icon {
+    color: rgba(255,255,255,1) !important;
+}
+
+.nav-link:hover {
+    color: rgba(255,255,255,.75) !important;
+}
+
+.dropdown-item {
+    color: rgba(255,255,255,1) !important;
+}
+
+.dropdown-menu{
+    background-color: rgba(0,0,0,1) !important;
+}
+
+.dropdown-item:hover{
+    background-color: rgba(200,200,200,0.5) !important;
+}
+
+
+@media screen and (min-width: 640px) {
+
+}
+
+@media screen and (min-width: 960px) {
+    .brand {
+        cursor: pointer;
+        color: rgba(255,255,255,1) !important;
+        font-weight: bold;
+        font-size:3.0rem !important;
+    }
+    .nav-item {
+        margin-right:10px;
+    }
+}
+
+
+@media screen and (min-width: 1280px) {
+
+}
+
+@media screen and (min-width: 1600px) {
+
+}
+
+@media screen and (min-width: 1920px) {
+
+}
