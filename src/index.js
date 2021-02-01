@@ -10,20 +10,26 @@ import Login from './components/Login/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux'
 import store from './store'
+// import { PersistGate } from 'redux-persist/integration/react'
+// import { persistStore } from 'redux-persist'
+
+// let persistor = persistStore(store);
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
-            <div>
-            <Route component={NavbarComp} />
-            <Switch>
-                <Route exact path="/login" component={Login} />
-                <ProtectedRoute exact path="/" component={App} />
-                <Route component={NotFound} />
-            </Switch>
-            {/* <Route component={Footer} /> */}
-            </div>
-        </Router>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+            <Router>
+                <div>
+                <Route component={NavbarComp} />
+                <Switch>
+                    <Route exact path="/login" component={Login} />
+                    <ProtectedRoute exact path="/" component={App} />
+                    <Route component={NotFound} />
+                </Switch>
+                {/* <Route component={Footer} /> */}
+                </div>
+            </Router>
+        {/* </PersistGate> */}
     </Provider>,
   document.getElementById('root')
 );

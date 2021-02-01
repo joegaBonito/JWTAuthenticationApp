@@ -1,10 +1,11 @@
-import React, { Component, useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import './Login.css';
-import { Button, Form, FormGroup, Label, Input, FormText,Container, Row, Col } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { useHistory } from "react-router";
 import { tokens } from '../../store/user';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ const Login = (props) => {
         console.log(response);
         accessToken = response.data.token.accessToken;
         refreshToken = response.data.token.refreshToken;
+        reactLocalStorage.set('accessToken',JSON.parse(JSON.stringify(accessToken)));
+        reactLocalStorage.set('refreshToken',JSON.parse(JSON.stringify(refreshToken)));
+        accessToken= reactLocalStorage.get('accessToken');
+        refreshToken= reactLocalStorage.get('refreshToken');
+        console.log('accessTokenLocalStorage: ' + accessToken);
         dispatch(tokens({accessToken,refreshToken}));
         // props.history.push('/')
         history.push({

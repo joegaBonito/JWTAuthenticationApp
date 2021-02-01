@@ -1,9 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {reactLocalStorage} from 'reactjs-localstorage';
+
+
 // Slice
 const slice = createSlice({
   name: 'user',
   initialState: {
     user: null,
+    accessToken: reactLocalStorage.get('accessToken'),
+    refreshToken: reactLocalStorage.get('refreshToken'),
     isAuthenticated: false,
     isLoading: true
   },
@@ -15,25 +20,30 @@ const slice = createSlice({
       state.user = null;
     },
     tokensSuccess: (state, action) => {
-      // console.log('accessToken from tokenSuccess: ' + action.payload.accessToken)
-      // console.log('refreshToken from tokenSuccess: ' + action.payload.refreshToken)
-
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
     authenticatedSuccess: (state, action) => {
         state.isAuthenticated = action.payload.isAuthenticated;
-        console.log('Slice: ' + state.isAuthenticated);
+        state.isLoading = action.payload.isLoading;
+        console.log('authenticatedSuccess Slice isAuthenticated: ' + state.isAuthenticated);
+        console.log('authenticatedSuccess Slice isLoading: ' + state.isLoading);
+        console.log('authenticatedSuccess Slice accessToken: ' + state.accessToken);
     },
-    loadingSuccess: (state, action) => {
-      state.isLoading = action.payload.isLoading;
-  },
+    authenticatedFail: (state, action) => {
+        state.isAuthenticated = action.payload.isAuthenticated;
+        state.isLoading = action.payload.isLoading;
+        state.accessToken = action.payload.accessToken;
+        console.log('authenticatedFail Slice isAuthenticated: ' + state.isAuthenticated);
+        console.log('authenticatedFail Slice isLoading: ' + state.isLoading);
+        console.log('authenticatedFail Slice accessToken: ' + state.accessToken);
+    }
   },
 });
 export default slice.reducer
 
 // Actions
-const { loginSuccess, logoutSuccess, tokensSuccess, authenticatedSuccess,loadingSuccess } = slice.actions
+const { loginSuccess, logoutSuccess, tokensSuccess, authenticatedSuccess,authenticatedFail } = slice.actions
 
 export const login = ({ username, password }) => async dispatch => {
   try {
@@ -51,28 +61,23 @@ export const logout = () => async dispatch => {
     return console.error(e.message);
   }
 }
-export const tokens = ({ accessToken, refreshToken }) => async dispatch => {
+export const tokens = ({accessToken, refreshToken}) => async dispatch => {
   try {
     console.log('tokens action called')
-    dispatch(tokensSuccess({accessToken, refreshToken}));
+    dispatch(tokensSuccess({accessToken,refreshToken}));
   } catch (e) {
     return console.error(e.message);
   }
 }
 
-export const isAuthenticatedAction = (isAuthenticated) => async dispatch => {
+export const isAuthenticatedAction = (isAuthenticated, isLoading) => async dispatch => {
     try {
-      console.log('Action isAuthenticated: '+isAuthenticated);
-      dispatch(authenticatedSuccess({isAuthenticated:isAuthenticated}));
+      if(isAuthenticated === true){ 
+        dispatch(authenticatedSuccess({isAuthenticated:isAuthenticated, isLoading:isLoading}));
+      } else {
+        dispatch(authenticatedFail({isAuthenticated:isAuthenticated, isLoading:isLoading, accessToken:null}));
+      }
     } catch (e) {
       return console.error(e.message);
     }
-}
-
-export const isLoadingAction = (isLoading) => async dispatch => {
-  try {
-    dispatch(loadingSuccess({isLoading:isLoading}));
-  } catch (e) {
-    return console.error(e.message);
-  }
 }
